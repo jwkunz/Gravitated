@@ -969,6 +969,7 @@
         ctx.beginPath();
         ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
         ctx.fill();
+        drawBodySurfaceTexture(body, p, r);
         ctx.strokeStyle = 'rgba(255,255,255,0.14)';
         ctx.lineWidth = 1;
         ctx.stroke();
@@ -982,10 +983,71 @@
         ctx.moveTo(0, 0);
         ctx.lineTo(r * 0.95, 0);
         ctx.stroke();
+        ctx.fillStyle = 'rgba(255,255,255,0.95)';
+        ctx.beginPath();
+        ctx.arc(r * 0.72, 0, Math.max(1.8, r * 0.08), 0, Math.PI * 2);
+        ctx.fill();
         ctx.restore();
 
         drawVelocityVector(body, p, r);
       });
+    }
+
+    function drawBodySurfaceTexture(body, screenPos, radiusPx) {
+      const spinMagnitude = Math.min(1.35, Math.abs(body.L.z) / Math.max(1, body.mass * body.radius * 16));
+      const bandCount = 4 + Math.round(spinMagnitude * 4);
+      const spotCount = 3 + Math.round(spinMagnitude * 5);
+
+      ctx.save();
+      ctx.translate(screenPos.x, screenPos.y);
+      ctx.rotate(-body.angle);
+
+      ctx.beginPath();
+      ctx.arc(0, 0, radiusPx * 0.985, 0, Math.PI * 2);
+      ctx.clip();
+
+      for (let i = 0; i < bandCount; i++) {
+        const y = ((i + 0.5) / bandCount - 0.5) * radiusPx * 1.8;
+        const bandHeight = radiusPx * (0.16 + (i % 2) * 0.04);
+        const bandWidth = radiusPx * 2.4;
+        const offset = Math.sin(body.angle * 0.8 + i * 1.7) * radiusPx * 0.14;
+        const band = ctx.createLinearGradient(-bandWidth * 0.5, y, bandWidth * 0.5, y);
+        band.addColorStop(0, hexToRgba(shadeColor(body.color, -48), 0));
+        band.addColorStop(0.2, hexToRgba(shadeColor(body.color, -28), 0.34));
+        band.addColorStop(0.5, hexToRgba(shadeColor(body.color, 8), 0.22));
+        band.addColorStop(0.8, hexToRgba(shadeColor(body.color, -34), 0.34));
+        band.addColorStop(1, hexToRgba(shadeColor(body.color, -48), 0));
+        ctx.fillStyle = band;
+        ctx.beginPath();
+        ctx.ellipse(offset, y, bandWidth * 0.5, bandHeight, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      for (let i = 0; i < spotCount; i++) {
+        const angle = i * 2.2 + body.radius * 0.03;
+        const dist = radiusPx * (0.18 + (i % 3) * 0.16);
+        const x = Math.cos(angle) * dist;
+        const y = Math.sin(angle * 1.4) * dist * 0.7;
+        const spotR = radiusPx * (0.12 - (i % 2) * 0.025);
+        ctx.fillStyle = hexToRgba(shadeColor(body.color, -42), 0.22);
+        ctx.beginPath();
+        ctx.arc(x, y, spotR, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = hexToRgba(shadeColor(body.color, 18), 0.18);
+        ctx.lineWidth = Math.max(1, radiusPx * 0.02);
+        ctx.stroke();
+      }
+
+      const sheen = ctx.createLinearGradient(-radiusPx, -radiusPx * 0.35, radiusPx, radiusPx * 0.4);
+      sheen.addColorStop(0, 'rgba(255,255,255,0.24)');
+      sheen.addColorStop(0.45, 'rgba(255,255,255,0.05)');
+      sheen.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = sheen;
+      ctx.beginPath();
+      ctx.ellipse(-radiusPx * 0.12, -radiusPx * 0.14, radiusPx * 0.9, radiusPx * 0.58, -0.4, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
     }
 
     function drawVelocityVector(body, screenPos, radiusPx) {
