@@ -186,6 +186,54 @@
       font-size: 1rem;
     }
 
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .body-card-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .body-card {
+      background: rgba(18, 28, 58, 0.52);
+      border: 1px solid rgba(125, 159, 255, 0.18);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .body-card-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .body-card-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+    }
+
+    .swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+    }
+
     .muted {
       color: var(--muted);
       font-size: 0.82rem;
@@ -432,53 +480,19 @@
       </div>
       <div class="config-grid">
         <div class="card">
-          <h3>Body A</h3>
-          <div class="muted">Configure position, velocity, angular momentum vector, radius, and density.</div>
-
-          <div class="field-grid">
-            <div class="field"><label for="aPx">Position x</label><input id="aPx" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="-160"></div>
-            <div class="field"><label for="aPy">Position y</label><input id="aPy" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="0"></div>
-            <div class="field"><label for="aVx">Velocity x</label><input id="aVx" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="0"></div>
-            <div class="field"><label for="aVy">Velocity y</label><input id="aVy" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="25"></div>
+          <div class="card-head">
+            <div>
+              <h3 style="margin:0;">Bodies</h3>
+              <div class="muted" style="margin:6px 0 0;">Add up to 12 bodies. Each card controls one body in the system.</div>
+            </div>
+            <div class="card-actions">
+              <button id="addBodyBtn" type="button">Add Body</button>
+            </div>
           </div>
 
-          <div class="field-grid three" style="margin-top:10px;">
-            <div class="field"><label for="aLx">Angular Lx</label><input id="aLx" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="0"></div>
-            <div class="field"><label for="aLy">Angular Ly</label><input id="aLy" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="0"></div>
-            <div class="field"><label for="aLz">Angular Lz</label><input id="aLz" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="1600"></div>
-          </div>
+          <div id="bodyCards" class="body-card-list"></div>
 
-          <div class="field-grid" style="margin-top:10px;">
-            <div class="field"><label for="aRadius">Radius</label><input id="aRadius" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="24"></div>
-            <div class="field"><label for="aDensity">Density</label><input id="aDensity" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="1.8"></div>
-          </div>
-
-          <div class="small-note">For a 2D simulation, only <strong>Lz</strong> affects visible spin. Lx and Ly remain part of the state vector.</div>
-        </div>
-
-        <div class="card">
-          <h3>Body B</h3>
-          <div class="muted">The two bodies attract each other with a tunable gravitational constant.</div>
-
-          <div class="field-grid">
-            <div class="field"><label for="bPx">Position x</label><input id="bPx" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="160"></div>
-            <div class="field"><label for="bPy">Position y</label><input id="bPy" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="0"></div>
-            <div class="field"><label for="bVx">Velocity x</label><input id="bVx" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="0"></div>
-            <div class="field"><label for="bVy">Velocity y</label><input id="bVy" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="-10"></div>
-          </div>
-
-          <div class="field-grid three" style="margin-top:10px;">
-            <div class="field"><label for="bLx">Angular Lx</label><input id="bLx" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="0"></div>
-            <div class="field"><label for="bLy">Angular Ly</label><input id="bLy" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="0"></div>
-            <div class="field"><label for="bLz">Angular Lz</label><input id="bLz" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="-1100"></div>
-          </div>
-
-          <div class="field-grid" style="margin-top:10px;">
-            <div class="field"><label for="bRadius">Radius</label><input id="bRadius" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="18"></div>
-            <div class="field"><label for="bDensity">Density</label><input id="bDensity" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="2.4"></div>
-          </div>
-
-          <div class="small-note">Mass is computed as <strong>m = density × πr²</strong>. Collision is perfectly inelastic.</div>
+          <div class="small-note">Collisions merge bodies inelastically. For a 2D simulation, only <strong>Lz</strong> affects visible spin.</div>
         </div>
 
         <div class="card">
@@ -498,8 +512,7 @@
           </div>
 
           <div class="legend">
-            <span><span class="dot" style="background:#8cf0ff"></span>Body A</span>
-            <span><span class="dot" style="background:#ffbf69"></span>Body B</span>
+            <span><span class="dot" style="background:#8cf0ff"></span>Palette colors cycle per body</span>
             <span><span class="dot" style="background:#d8a8ff"></span>Merged body</span>
           </div>
 
@@ -541,10 +554,33 @@
     const controlsToggleBtn = document.getElementById('controlsToggleBtn');
     const closeControlsBtn = document.getElementById('closeControlsBtn');
     const panelBackdrop = document.getElementById('panelBackdrop');
+    const bodyCardsContainer = document.getElementById('bodyCards');
+    const addBodyBtn = document.getElementById('addBodyBtn');
+
+    const MAX_BODIES = 12;
+    const BODY_COLORS = ['#8cf0ff', '#ffbf69', '#ff7aa2', '#92ffb0', '#d9a8ff', '#ffd66e', '#7de3ff', '#ff9f6e'];
+    const defaultBodyConfigs = [
+      {
+        name: 'Body 1',
+        color: BODY_COLORS[0],
+        pos: { x: -160, y: 0 },
+        vel: { x: 0, y: 25 },
+        radius: 24,
+        density: 1.8,
+        L: { x: 0, y: 0, z: 1600 }
+      },
+      {
+        name: 'Body 2',
+        color: BODY_COLORS[1],
+        pos: { x: 160, y: 0 },
+        vel: { x: 0, y: -10 },
+        radius: 18,
+        density: 2.4,
+        L: { x: 0, y: 0, z: -1100 }
+      }
+    ];
 
     const inputIds = [
-      'aPx','aPy','aVx','aVy','aLx','aLy','aLz','aRadius','aDensity',
-      'bPx','bPy','bVx','bVy','bLx','bLy','bLz','bRadius','bDensity',
       'timeStep','gravConst','pixelsPerUnit','trailLength','autoFitPadding','zoomSmoothing',
       'trackCentroid','autoResizeViewport'
     ];
@@ -661,21 +697,17 @@
       return 0.5 * mass * radius * radius;
     }
 
-    function buildBody(name, color, prefix) {
-      const radius = clampPositive(num(`${prefix}Radius`), 1);
-      const density = clampPositive(num(`${prefix}Density`), 1);
+    function buildBody(config) {
+      const radius = clampPositive(config.radius, 1);
+      const density = clampPositive(config.density, 1);
       const mass = massFrom(radius, density);
-      const L = {
-        x: num(`${prefix}Lx`),
-        y: num(`${prefix}Ly`),
-        z: num(`${prefix}Lz`)
-      };
+      const L = structuredClone(config.L);
 
       return {
-        name,
-        color,
-        pos: { x: num(`${prefix}Px`), y: num(`${prefix}Py`) },
-        vel: { x: num(`${prefix}Vx`), y: num(`${prefix}Vy`) },
+        name: config.name,
+        color: config.color,
+        pos: { x: config.pos.x, y: config.pos.y },
+        vel: { x: config.vel.x, y: config.vel.y },
         radius,
         density,
         mass,
@@ -683,6 +715,122 @@
         angle: 0,
         trail: []
       };
+    }
+
+    function createBodyConfig(overrides = {}) {
+      return {
+        name: overrides.name ?? `Body ${Date.now()}`,
+        color: overrides.color ?? BODY_COLORS[0],
+        pos: { x: overrides.pos?.x ?? 0, y: overrides.pos?.y ?? 0 },
+        vel: { x: overrides.vel?.x ?? 0, y: overrides.vel?.y ?? 0 },
+        radius: overrides.radius ?? 16,
+        density: overrides.density ?? 1.8,
+        L: {
+          x: overrides.L?.x ?? 0,
+          y: overrides.L?.y ?? 0,
+          z: overrides.L?.z ?? 0
+        }
+      };
+    }
+
+    function bodyCardMarkup(config, index, canRemove) {
+      return `
+        <div class="body-card" data-index="${index}" data-color="${config.color}">
+          <div class="body-card-title">
+            <div class="body-card-name">
+              <span class="swatch" style="background:${config.color}"></span>
+              <span>${config.name}</span>
+            </div>
+            <button class="secondary remove-body-btn" type="button" ${canRemove ? '' : 'disabled'}>Remove</button>
+          </div>
+
+          <div class="field-grid">
+            <div class="field"><label>Position x</label><input data-field="px" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="${config.pos.x}"></div>
+            <div class="field"><label>Position y</label><input data-field="py" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="${config.pos.y}"></div>
+            <div class="field"><label>Velocity x</label><input data-field="vx" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="${config.vel.x}"></div>
+            <div class="field"><label>Velocity y</label><input data-field="vy" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="${config.vel.y}"></div>
+          </div>
+
+          <div class="field-grid three" style="margin-top:10px;">
+            <div class="field"><label>Angular Lx</label><input data-field="lx" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="${config.L.x}"></div>
+            <div class="field"><label>Angular Ly</label><input data-field="ly" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="${config.L.y}"></div>
+            <div class="field"><label>Angular Lz</label><input data-field="lz" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="${config.L.z}"></div>
+          </div>
+
+          <div class="field-grid" style="margin-top:10px;">
+            <div class="field"><label>Radius</label><input data-field="radius" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="${config.radius}"></div>
+            <div class="field"><label>Density</label><input data-field="density" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="${config.density}"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function readField(card, field, fallback = 0) {
+      const input = card.querySelector(`[data-field="${field}"]`);
+      const value = parseFloat(input?.value ?? '');
+      return Number.isFinite(value) ? value : fallback;
+    }
+
+    function readBodyConfigs() {
+      return Array.from(bodyCardsContainer.querySelectorAll('.body-card')).map((card, index) => ({
+        name: `Body ${index + 1}`,
+        color: card.dataset.color || BODY_COLORS[index % BODY_COLORS.length],
+        pos: { x: readField(card, 'px'), y: readField(card, 'py') },
+        vel: { x: readField(card, 'vx'), y: readField(card, 'vy') },
+        radius: readField(card, 'radius', 16),
+        density: readField(card, 'density', 1.8),
+        L: {
+          x: readField(card, 'lx'),
+          y: readField(card, 'ly'),
+          z: readField(card, 'lz')
+        }
+      }));
+    }
+
+    function renderBodyCards(configs) {
+      bodyCardsContainer.innerHTML = configs.map((config, index) =>
+        bodyCardMarkup(
+          {
+            ...config,
+            name: `Body ${index + 1}`,
+            color: config.color ?? BODY_COLORS[index % BODY_COLORS.length]
+          },
+          index,
+          configs.length > 1
+        )
+      ).join('');
+
+      addBodyBtn.disabled = configs.length >= MAX_BODIES;
+    }
+
+    function getSuggestedNewBodyConfig() {
+      const configs = readBodyConfigs();
+      const count = configs.length;
+      const center = configs.length
+        ? configs.reduce((acc, body) => {
+            acc.x += body.pos.x;
+            acc.y += body.pos.y;
+            return acc;
+          }, { x: 0, y: 0 })
+        : { x: 0, y: 0 };
+
+      center.x /= Math.max(1, configs.length);
+      center.y /= Math.max(1, configs.length);
+
+      const angle = count * (Math.PI * 0.72);
+      const distance = 120 + count * 22;
+      return createBodyConfig({
+        name: `Body ${count + 1}`,
+        color: BODY_COLORS[count % BODY_COLORS.length],
+        pos: {
+          x: center.x + Math.cos(angle) * distance,
+          y: center.y + Math.sin(angle) * distance
+        },
+        vel: { x: 0, y: 0 },
+        radius: 16,
+        density: 1.8,
+        L: { x: 0, y: 0, z: 0 }
+      });
     }
 
     function readConfig() {
@@ -695,10 +843,7 @@
         autoResizeViewport: bool('autoResizeViewport'),
         autoFitPadding: Math.max(1, Math.abs(num('autoFitPadding', 1.2))),
         zoomSmoothing: Math.min(1, Math.max(0, Math.abs(num('zoomSmoothing', 0.08)))),
-        bodies: [
-          buildBody('A', '#8cf0ff', 'a'),
-          buildBody('B', '#ffbf69', 'b')
-        ]
+        bodies: readBodyConfigs().map(buildBody)
       };
     }
 
@@ -846,45 +991,68 @@
       };
     }
 
-    function stepSimulation(substeps = 1) {
-      for (let step = 0; step < substeps; step++) {
-        if (state.bodies.length === 2) {
-          const [a, b] = state.bodies;
+    function findCollidingPair() {
+      for (let i = 0; i < state.bodies.length; i++) {
+        for (let j = i + 1; j < state.bodies.length; j++) {
+          const a = state.bodies[i];
+          const b = state.bodies[j];
           const dx = b.pos.x - a.pos.x;
           const dy = b.pos.y - a.pos.y;
-          const distSq = dx * dx + dy * dy;
-          const dist = Math.sqrt(distSq);
-          const minDist = a.radius + b.radius;
-
-          if (dist <= minDist) {
-            state.bodies = [mergeBodies(a, b)];
-            continue;
+          if (Math.hypot(dx, dy) <= a.radius + b.radius) {
+            return [i, j];
           }
+        }
+      }
+      return null;
+    }
 
-          const softening = 1e-6;
-          const forceMag = state.G * a.mass * b.mass / (distSq + softening);
-          const ux = dx / dist;
-          const uy = dy / dist;
+    function resolveCollisions() {
+      let pair = findCollidingPair();
+      while (pair) {
+        const [i, j] = pair;
+        const merged = mergeBodies(state.bodies[i], state.bodies[j]);
+        state.bodies.splice(j, 1);
+        state.bodies.splice(i, 1);
+        state.bodies.push(merged);
+        pair = findCollidingPair();
+      }
+    }
 
-          const axA = (forceMag / a.mass) * ux;
-          const ayA = (forceMag / a.mass) * uy;
-          const axB = -(forceMag / b.mass) * ux;
-          const ayB = -(forceMag / b.mass) * uy;
+    function stepSimulation(substeps = 1) {
+      for (let step = 0; step < substeps; step++) {
+        resolveCollisions();
 
-          a.vel.x += axA * state.dt;
-          a.vel.y += ayA * state.dt;
-          b.vel.x += axB * state.dt;
-          b.vel.y += ayB * state.dt;
+        const accelerations = state.bodies.map(() => ({ x: 0, y: 0 }));
+        const softening = 1e-6;
 
-          a.pos.x += a.vel.x * state.dt;
-          a.pos.y += a.vel.y * state.dt;
-          b.pos.x += b.vel.x * state.dt;
-          b.pos.y += b.vel.y * state.dt;
-        } else if (state.bodies.length === 1) {
-          const body = state.bodies[0];
+        for (let i = 0; i < state.bodies.length; i++) {
+          for (let j = i + 1; j < state.bodies.length; j++) {
+            const a = state.bodies[i];
+            const b = state.bodies[j];
+            const dx = b.pos.x - a.pos.x;
+            const dy = b.pos.y - a.pos.y;
+            const distSq = dx * dx + dy * dy;
+            const dist = Math.sqrt(distSq + softening);
+            const invDist = 1 / dist;
+            const ux = dx * invDist;
+            const uy = dy * invDist;
+            const forceMag = state.G * a.mass * b.mass / (distSq + softening);
+
+            accelerations[i].x += (forceMag / a.mass) * ux;
+            accelerations[i].y += (forceMag / a.mass) * uy;
+            accelerations[j].x -= (forceMag / b.mass) * ux;
+            accelerations[j].y -= (forceMag / b.mass) * uy;
+          }
+        }
+
+        state.bodies.forEach((body, index) => {
+          body.vel.x += accelerations[index].x * state.dt;
+          body.vel.y += accelerations[index].y * state.dt;
           body.pos.x += body.vel.x * state.dt;
           body.pos.y += body.vel.y * state.dt;
-        }
+        });
+
+        resolveCollisions();
 
         state.bodies.forEach(body => {
           const I = inertiaDisk(body.mass, body.radius);
@@ -898,6 +1066,43 @@
       }
 
       updateCamera();
+    }
+
+    function summarizeBody(body) {
+      const speed = vecLen(body.vel);
+      return `<strong>${body.name}</strong> m=${body.mass.toFixed(2)}, r=${body.radius.toFixed(2)}, |v|=${speed.toFixed(3)}, ` +
+        `Lz=${body.L.z.toFixed(1)}`;
+    }
+
+    function renderHud() {
+      const lines = [];
+      lines.push(`<strong>dt</strong> ${state.dt.toFixed(4)} | <strong>G</strong> ${state.G.toFixed(3)} | <strong>bodies</strong> ${state.bodies.length}`);
+      lines.push(`<strong>track centroid</strong> ${state.trackCentroid ? 'on' : 'off'} | <strong>auto-fit</strong> ${state.autoResizeViewport ? 'on' : 'off'}`);
+      lines.push(`<strong>base px/unit</strong> ${state.basePixelsPerUnit.toFixed(3)} | <strong>view px/unit</strong> ${state.viewPixelsPerUnit.toFixed(3)}`);
+      lines.push(`<strong>camera center</strong> (${state.cameraCenter.x.toFixed(2)}, ${state.cameraCenter.y.toFixed(2)})`);
+
+      const totalMass = state.bodies.reduce((sum, body) => sum + body.mass, 0);
+      lines.push(`<strong>total mass</strong> ${totalMass.toFixed(2)}`);
+
+      if (state.bodies.length <= 3) {
+        state.bodies.forEach(body => lines.push(summarizeBody(body)));
+      } else {
+        state.bodies.slice(0, 3).forEach(body => lines.push(summarizeBody(body)));
+        lines.push(`<strong>additional bodies</strong> ${state.bodies.length - 3} more`);
+      }
+
+      if (state.bodies.length >= 2) {
+        let minDistance = Infinity;
+        for (let i = 0; i < state.bodies.length; i++) {
+          for (let j = i + 1; j < state.bodies.length; j++) {
+            const dx = state.bodies[j].pos.x - state.bodies[i].pos.x;
+            const dy = state.bodies[j].pos.y - state.bodies[i].pos.y;
+            minDistance = Math.min(minDistance, Math.hypot(dx, dy));
+          }
+        }
+        lines.push(`<strong>closest separation</strong> ${minDistance.toFixed(3)}`);
+      }
+      hudStats.innerHTML = lines.join('<br>');
     }
 
     function worldToScreen(pos) {
@@ -1079,36 +1284,6 @@
       ctx.restore();
     }
 
-    function renderHud() {
-      const lines = [];
-      lines.push(`<strong>dt</strong> ${state.dt.toFixed(4)} | <strong>G</strong> ${state.G.toFixed(3)} | <strong>bodies</strong> ${state.bodies.length}`);
-      lines.push(`<strong>track centroid</strong> ${state.trackCentroid ? 'on' : 'off'} | <strong>auto-fit</strong> ${state.autoResizeViewport ? 'on' : 'off'}`);
-      lines.push(`<strong>base px/unit</strong> ${state.basePixelsPerUnit.toFixed(3)} | <strong>view px/unit</strong> ${state.viewPixelsPerUnit.toFixed(3)}`);
-      lines.push(`<strong>camera center</strong> (${state.cameraCenter.x.toFixed(2)}, ${state.cameraCenter.y.toFixed(2)})`);
-
-      state.bodies.forEach((b) => {
-        const speed = vecLen(b.vel);
-        lines.push(
-          `<strong>${b.name}</strong> m=${b.mass.toFixed(2)}, r=${b.radius.toFixed(2)}, |v|=${speed.toFixed(3)}, ` +
-          `L=(${b.L.x.toFixed(1)}, ${b.L.y.toFixed(1)}, ${b.L.z.toFixed(1)})`
-        );
-      });
-
-      if (state.bodies.length === 2) {
-        const [a, b] = state.bodies;
-        const dx = b.pos.x - a.pos.x;
-        const dy = b.pos.y - a.pos.y;
-        const d = Math.hypot(dx, dy);
-        const centroid = computeCentroid();
-        lines.push(`<strong>separation</strong> ${d.toFixed(3)} | <strong>collision threshold</strong> ${(a.radius + b.radius).toFixed(3)}`);
-        lines.push(`<strong>centroid</strong> (${centroid.x.toFixed(2)}, ${centroid.y.toFixed(2)})`);
-      } else {
-        lines.push(`<strong>collision</strong> merged into one body`);
-      }
-
-      hudStats.innerHTML = lines.join('<br>');
-    }
-
     function render() {
       const rect = canvas.getBoundingClientRect();
       ctx.clearRect(0, 0, rect.width, rect.height);
@@ -1170,10 +1345,32 @@
     if (panelBackdrop) {
       panelBackdrop.addEventListener('click', () => setControlsOpen(false));
     }
+    if (addBodyBtn) {
+      addBodyBtn.addEventListener('click', () => {
+        const configs = readBodyConfigs();
+        if (configs.length >= MAX_BODIES) return;
+        configs.push(getSuggestedNewBodyConfig());
+        renderBodyCards(configs);
+        syncPausedConfig();
+      });
+    }
+    if (bodyCardsContainer) {
+      bodyCardsContainer.addEventListener('input', syncPausedConfig);
+      bodyCardsContainer.addEventListener('click', event => {
+        const button = event.target.closest('.remove-body-btn');
+        if (!button) return;
+
+        const configs = readBodyConfigs();
+        const card = button.closest('.body-card');
+        const index = Number(card?.dataset.index);
+        if (!Number.isInteger(index) || configs.length <= 1) return;
+        configs.splice(index, 1);
+        renderBodyCards(configs);
+        syncPausedConfig();
+      });
+    }
 
     [
-      'aPx','aPy','aVx','aVy','aLx','aLy','aLz','aRadius','aDensity',
-      'bPx','bPy','bVx','bVy','bLx','bLy','bLz','bRadius','bDensity',
       'timeStep','gravConst','pixelsPerUnit','trailLength','autoFitPadding','zoomSmoothing',
       'trackCentroid','autoResizeViewport'
     ].forEach(id => {
@@ -1183,6 +1380,7 @@
 
     window.addEventListener('resize', () => applyLayoutMode(false));
 
+    renderBodyCards(defaultBodyConfigs.map(config => createBodyConfig(config)));
     resetSimulation();
     applyLayoutMode(true);
   </script>
