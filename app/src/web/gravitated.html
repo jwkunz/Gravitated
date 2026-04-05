@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2-Body Gravity Simulator</title>
+  <title>N-Body Gravity Simulator</title>
   <style>
     :root {
       --bg: #050816;
@@ -448,8 +448,8 @@
   <div class="app">
     <div class="topbar">
       <div class="title-wrap">
-        <div class="title">2-Body Gravity Simulator</div>
-        <div class="subtitle">2D Newtonian gravity with inelastic sticking collision, optional centroid tracking, and auto-fit viewport</div>
+        <div class="title">N-Body Gravity Simulator</div>
+        <div class="subtitle">N-body gravitational simulation with inelastic merging, centroid tracking, and an auto-fit viewport</div>
       </div>
       <div class="controls">
         <button id="startBtn">Start</button>
@@ -516,7 +516,7 @@
             <span><span class="dot" style="background:#d8a8ff"></span>Merged body</span>
           </div>
 
-          <div class="small-note">Default velocities are set to produce an orbital-style motion in the initial scene.</div>
+          <div class="small-note">Default values are tuned to give the initial N-body scene visible motion without extra setup.</div>
         </div>
 
         <div class="card">
