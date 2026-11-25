@@ -3,13 +3,18 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
+// One version for the whole project: the VERSION file at the repository root.
+val projectVersion = rootProject.file("../VERSION").readText().trim()
+val versionParts = projectVersion.split(".").map { it.toInt() }
+val androidVersionCode = versionParts[0] * 10_000 + versionParts[1] * 100 + versionParts[2]
+
 android {
     namespace = "com.example.gravitated"
     compileSdk = 36
 
     sourceSets {
         getByName("main") {
-            assets.srcDirs("src/web")
+            assets.srcDir("build/generated/web-assets")
         }
     }
 
@@ -17,8 +22,8 @@ android {
         applicationId = "com.example.gravitated"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = androidVersionCode
+        versionName = projectVersion
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,6 +45,15 @@ android {
         jvmTarget = "11"
     }
 }
+
+// Bundles the web app (../web/gravitated.html) as the app's index.html. There is no web build step:
+// the page is a single hand-written HTML file.
+val copyWeb by tasks.registering(Copy::class) {
+    from(rootProject.file("../web/gravitated.html")) { rename { "index.html" } }
+    into(layout.buildDirectory.dir("generated/web-assets"))
+}
+
+tasks.named("preBuild") { dependsOn(copyWeb) }
 
 dependencies {
     implementation(libs.androidx.core.ktx)

@@ -22,7 +22,7 @@ jobs:
       - name: Assemble site
         run: |
           mkdir -p _site
-          cp app/src/web/gravitated.html _site/index.html
+          cp web/gravitated.html _site/index.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

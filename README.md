@@ -1,10 +1,17 @@
 # Gravitated
 
-Android app wrapper for the `gravitated.html` web simulation.
+![Gravitated logo](web/Gravitated_logo.png)
 
-This project packages the web app in [`app/src/web/gravitated.html`](/home/jwkunz/proj_android/gravitated/app/src/web/gravitated.html) and serves it through an Android `WebView` using `WebViewAssetLoader`.
+An N-body gravity simulation that runs in the browser and as an Android app. The app is a single self-contained HTML page; the Android app is a thin `WebView` wrapper around the same page. Everything runs on your device and works offline.
 
-## Current Features
+## Get it
+
+| Where | What |
+|-------|------|
+| **[jwkunz.github.io/Gravitated](https://jwkunz.github.io/Gravitated/)** | The web app, always the latest `main` (deployed by GitHub Pages) |
+| **[Releases](https://github.com/jwkunz/Gravitated/releases)** | `gravitated-vX.Y.Z.html`, a single file you can save and open locally, and `gravitated-vX.Y.Z-debug.apk`, the Android app |
+
+## Features
 
 - N-body gravity simulation with up to 12 configurable bodies
 - Inelastic body merging on collision
@@ -13,41 +20,55 @@ This project packages the web app in [`app/src/web/gravitated.html`](/home/jwkun
 - Adaptive viewport with centroid tracking and auto-fit scaling
 - Branded Android launcher icon
 
-## Project Layout
+## Repository layout
 
-- `app/src/web/gravitated.html`
-  The web simulation UI, rendering, and physics logic.
-- `app/src/main/java/com/example/gravitated/MainActivity.kt`
-  Android activity hosting the `WebView`.
-- `app/src/main/res/`
-  Android resources including launcher icons and theme files.
+```
+VERSION                  the one place the project version lives
+web/                     the simulation
+  gravitated.html          the whole app: UI, rendering and physics (edit this)
+  Gravitated_logo.png      logo
+Android/                 Gradle project: a WebView app that bundles the web page
+  app/src/main/java/       MainActivity hosting the WebView (WebViewAssetLoader)
+  app/src/main/res/        launcher icons, theme and layout
+.github/workflows/       ci.yml (checks, builds, releases) and pages.yml (site deploy)
+```
 
-## Build
+The web app is edited in exactly one place, `web/gravitated.html`. Both the GitHub Pages site and the Android app are built from it, so a push to `main` updates the site, and the next APK build picks up the same code.
 
-Requirements:
+## How it fits together
 
-- Android SDK
-- JDK 11 or newer
+There is no web build step. `web/gravitated.html` is copied:
 
-Build a debug APK:
+- to the site as `index.html` by `pages.yml`,
+- into the Android app's assets as `index.html` by the `copyWeb` Gradle task (`MainActivity` loads `https://appassets.androidplatform.net/assets/index.html`),
+- onto each GitHub release as `gravitated-vX.Y.Z.html`.
+
+## Building locally
+
+**Web.** Open `web/gravitated.html` in a browser.
+
+**Android.** Needs JDK 21 and the Android SDK (set `sdk.dir` in `Android/local.properties`, which is git-ignored).
 
 ```bash
-./gradlew assembleDebug
+cd Android
+./gradlew :app:assembleDebug        # bundles the web page, then builds the APK
+adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
-Install to a connected device:
+The APK is a debug build; a Play Store upload would need a signed release build, which is not set up here.
+
+## Continuous integration
+
+- **`ci.yml`** runs on pushes to `main`, tags and pull requests: checks `VERSION` (and that it matches a release tag), checks the page is one self-contained file, and builds the debug APK.
+- **On a `v*` tag** it also publishes a GitHub release containing the HTML file and the APK.
+- **`pages.yml`** deploys the page to GitHub Pages on every push to `main`.
+
+## Versioning and releasing
+
+`VERSION` feeds the Android `versionName` and `versionCode` (`major*10000 + minor*100 + patch`) and must match the release tag.
 
 ```bash
-./gradlew installDebug
+echo 1.1.0 > VERSION
+git commit -am "Release 1.1.0"
+git tag v1.1.0 && git push origin main v1.1.0
 ```
-
-## Notes
-
-- The web assets are packaged via the app module `sourceSets` configuration.
-- The app loads the simulation from:
-
-```text
-https://appassets.androidplatform.net/assets/gravitated.html
-```
-
-- `local.properties` is intentionally ignored and should not be committed.

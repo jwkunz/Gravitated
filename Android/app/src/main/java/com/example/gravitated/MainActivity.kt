@@ -95,6 +95,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val APP_URL =
-            "https://appassets.androidplatform.net/assets/gravitated.html"
+            "https://appassets.androidplatform.net/assets/index.html"
     }
 }
